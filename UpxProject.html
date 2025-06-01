@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acessigo</title>
+    <link rel="stylesheet" href="UpxProject.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="main-content">
+        <div class="search-bar">
+            <span class="material-icons search-icon">search</span>
+            <input type="text" placeholder="Pesquisar..." />
+            <span class="acessigo-logo">
+                <span class="acessi">Acessi</span><span class="go">Go</span>
+            </span>
+        </div>
+        <div class="content-row">
+            <div class="filter-box-vertical">
+                <button class="filter-button">
+                    <span class="material-icons">home</span>
+                    <span class="material-icons arrow">chevron_right</span>
+                </button>
+                <div class="divider"></div>
+                <div class="filter-item">
+                    <span class="material-icons">person</span>
+                    <span class="material-icons arrow">chevron_right</span>
+                </div>
+                <div class="divider"></div>
+                <div class="filter-item">
+                    <span class="material-icons">bookmark</span>
+                    <span class="material-icons arrow">chevron_right</span>
+                </div>
+                <div class="divider"></div>
+                <div class="filter-item">
+                    <span class="material-icons">expand_more</span>
+                    <span class="material-icons arrow">chevron_right</span>
+                </div>
+            </div>
+            <div id="map-container">
+                <img src="Assets/Sorocaba.png" alt="Mapa do centro de Sorocaba" id="map">
+                <div class="gps-icon" 
+                    data-category="restaurantes"
+                    data-info="Restaurante 1" 
+                    data-image="Assets/local1.jpg" 
+                    data-rating="4" 
+                    data-comments="Ótimo local, muito acessível!" 
+                    data-accessibility="cadeirantes, deficientes visuais" 
+                    style="top: 20%; left: 30%; position: absolute;"
+                    data-maps-link="https://maps.app.goo.gl/qYo6pGVR4oC8dJLE8">
+                    <span class="material-icons">location_on</span>
+                </div>
+                <div class="gps-icon" 
+                    data-category="restaurantes"
+                    data-info="Restaurante 2" 
+                    data-image="Assets/local2.jpg" 
+                    data-rating="5" 
+                    data-comments="Excelente atendimento e estrutura." 
+                    data-accessibility="cadeirantes, deficientes auditivos" 
+                    style="top: 50%; left: 50%; position: absolute;"
+                    data-maps-link="https://maps.app.goo.gl/P5uzJyTnXwqdCx9Q6">
+                    <span class="material-icons">location_on</span>
+                </div>
+                <div class="gps-icon" 
+                    data-category="restaurantes"
+                    data-info="Restaurante 3" 
+                    data-image="Assets/local3.jpg" 
+                    data-rating="3" 
+                    data-comments="Bom, mas poderia melhorar." 
+                    data-accessibility="deficientes visuais" 
+                    style="top: 70%; left: 80%; position: absolute;"
+                    data-maps-link="https://maps.app.goo.gl/7WzsNN9VXN5W8qAs7">
+                    <span class="material-icons">location_on</span>
+                </div>
+                <div class="gps-icon" 
+                    data-category="entretenimento"
+                    data-info="Cinema Central" 
+                    data-image="Assets/cinema.jpg" 
+                    data-rating="4" 
+                    data-comments="Ótima acessibilidade e programação variada." 
+                    data-accessibility="cadeirantes" 
+                    data-lat="-23.501234"
+                    data-lng="-47.452345"
+                    style="top: 30%; left: 60%; position: absolute;"
+                    data-maps-link="https://maps.app.goo.gl/wsghuzr2SqiLwbWt7">
+                    <span class="material-icons">location_on</span>
+                </div>
+                <div class="gps-icon" 
+                    data-category="entretenimento"
+                    data-info="Teatro Municipal" 
+                    data-image="Assets/teatro.jpg" 
+                    data-rating="4" 
+                    data-comments="Espaço amplo e confortável." 
+                    data-accessibility="cadeirantes, deficientes visuais" 
+                    style="top: 60%; left: 40%; position: absolute;"
+                    data-maps-link="https://maps.app.goo.gl/Ey1yAVWAj8qUHz4Y9">
+                    <span class="material-icons">location_on</span>
+                </div>
+                <div class="gps-icon" 
+                    data-category="entretenimento"
+                    data-info="Parque da Cidade" 
+                    data-image="Assets/parque.jpg" 
+                    data-rating="5" 
+                    data-comments="Ambiente agradável para toda família." 
+                    data-accessibility="cadeirantes" 
+                    style="top: 80%; left: 20%; position: absolute;"
+                    data-maps-link="https://maps.app.goo.gl/Nd23q8VfZVrKa9Bv7">
+                    <span class="material-icons">location_on</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="hidden">
+        <div id="modal-content">
+            <span id="close-modal">&times;</span>
+            <div id="modal-title" style="font-weight: bold; font-size: 1.2em; margin-bottom: 8px;"></div>
+            <img id="modal-image" src="" alt="Imagem do local" style="width: 100%; border-radius: 8px; margin-bottom: 16px;">
+            <div id="modal-rating"></div>
+            <button id="favorite-btn" title="Favoritar local">
+                <span class="material-icons" id="favorite-icon">outlined_flag</span>
+            </button>
+            <p id="modal-comments" style="margin-bottom: 16px;"></p>
+            <p id="modal-accessibility" style="font-weight: bold;"></p>
+            <button id="open-maps-btn" style="margin-top:12px;">Ver no Google Maps</button>
+        </div>
+    </div>
+
+    <div id="filter-modal" class="hidden">
+        <div id="filter-modal-content">
+            <span id="close-filter-modal">&times;</span>
+            <h3>Escolha uma categoria:</h3>
+            <button class="filter-option" data-category="restaurantes">Restaurantes</button>
+            <button class="filter-option" data-category="entretenimento">Entretenimento</button>
+            <button class="filter-option" data-category="outros">Outros</button>
+        </div>
+    </div>
+
+    <div id="disability-modal" class="hidden">
+        <div id="disability-modal-content">
+            <span id="close-disability-modal">&times;</span>
+            <h3>Selecione o tipo de deficiência:</h3>
+            <button class="disability-option" data-disability="cadeirantes">Cadeirante</button>
+            <button class="disability-option" data-disability="deficientes visuais">Deficiente Visual</button>
+            <button class="disability-option" data-disability="deficientes auditivos">Deficiente Auditivo</button>
+            <button class="disability-option" data-disability="todos">Todos</button>
+        </div>
+    </div>
+
+    <div id="favorites-modal" class="hidden">
+        <div id="favorites-modal-content">
+            <span id="close-favorites-modal" style="cursor:pointer;float:right;">&times;</span>
+            <h3>Locais Favoritados</h3>
+            <ul id="favorites-list" style="list-style:none; padding:0; margin:0;"></ul>
+        </div>
+    </div>
+
+    <div id="create-location-modal" class="hidden">
+        <div id="create-location-modal-content">
+            <span id="close-create-location-modal" style="cursor:pointer;float:right;">&times;</span>
+            <h3>Criar novo local</h3>
+            <form id="create-location-form">
+                <input type="text" id="new-location-name" placeholder="Nome do local" required style="width:100%;margin-bottom:8px;">
+                <input type="text" id="new-location-image" placeholder="URL da imagem" style="width:100%;margin-bottom:8px;">
+                <select id="new-location-category" required style="width:100%;margin-bottom:8px;">
+                    <option value="">Categoria</option>
+                    <option value="restaurantes">Restaurante</option>
+                    <option value="entretenimento">Entretenimento</option>
+                    <option value="outros">Outros</option>
+                </select>
+                <input type="number" id="new-location-rating" placeholder="Nota (1-5)" min="1" max="5" required style="width:100%;margin-bottom:8px;">
+                <input type="text" id="new-location-comments" placeholder="Comentário" style="width:100%;margin-bottom:8px;">
+                <div style="margin-bottom:8px;">
+                    <label style="font-weight:bold;">Acessibilidade:</label><br>
+                    <div class="accessibility-group">
+                        <label for="access-cadeirante">
+                            <input id="access-cadeirante" type="checkbox" name="new-location-accessibility" value="cadeirantes"> Cadeirante
+                        </label>
+                        <label for="access-visual">
+                            <input id="access-visual" type="checkbox" name="new-location-accessibility" value="deficientes visuais"> Deficiente Visual
+                        </label>
+                        <label for="access-auditivo">
+                            <input id="access-auditivo" type="checkbox" name="new-location-accessibility" value="deficientes auditivos"> Deficiente Auditivo
+                        </label>
+                    </div>
+                </div>
+                <input type="url" id="new-location-maps-link" placeholder="Cole o link do local no Google Maps" required style="width:100%;margin-bottom:8px;">
+                <button type="button" id="select-location-btn" style="width:100%;margin-top:8px;" disabled>Selecionar local</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="error-modal" class="hidden">
+        <div id="error-modal-content" style="background:white; padding:24px; border-radius:10px; min-width:240px; box-shadow:0 2px 16px rgba(0,0,0,0.18); text-align:center;">
+            <span id="close-error-modal" style="cursor:pointer;float:right;font-size:1.2em;">&times;</span>
+            <h3 style="color:#e74c3c; margin-top:0;">Erro</h3>
+            <p id="error-modal-message" style="margin:16px 0 0 0;"></p>
+        </div>
+    </div>
+
+    <script src="UpxProject.js"></script>
+</body>
+</html>

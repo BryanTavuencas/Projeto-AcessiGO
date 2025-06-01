@@ -1,0 +1,718 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #fcecb1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-content {
+    width: 100vw;
+    max-width: 1600px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#map-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#map {
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    display: block;
+}
+
+.gps-icon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+}
+
+.gps-icon .material-icons {
+    font-size: 32px;
+    color: #00c61c;
+    animation: floatPin 2s infinite ease-in-out;
+}
+
+@keyframes floatPin {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#modal.hidden {
+    display: none;
+}
+
+#modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+#modal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+#modal-rating {
+    font-size: 1.2rem;
+    color: #ffd700; /* Cor dourada para as estrelas */
+}
+
+#close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 1000px;
+    height: 56px;
+    background: #fff;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 0 2px #000;
+    margin-bottom: 32px;
+    margin-top: 0;
+    position: static;
+}
+
+.search-icon {
+    background: none;
+    color: #23d47c; /* verde */
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    font-size: 0;
+    border: none;
+    padding: 0;
+}
+
+.search-icon .material-icons {
+    font-size: 32px;
+    color: #23d47c; /* verde */
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    margin: 0 16px;
+    background: transparent;
+}
+
+.acessigo-logo {
+    margin-right: 24px;
+    font-size: 1.3rem;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.acessi {
+    color: #23d47c;
+}
+
+.go {
+    color: #ffd700;
+    margin-left: -2px;
+    text-decoration: underline dotted #ffd700 2px;
+}
+
+.content-row {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: flex-start;
+    gap: 32px; /* Espaço entre filtro e mapa */
+    margin: 0 auto;
+}
+
+.filter-box {
+    width: 120px;
+    min-height: 300px;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 0 0 2px #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 8px;
+    margin-top: 0;
+    font-size: 1.1rem;
+    gap: 16px;
+}
+
+.filter-box-vertical {
+    width: 100px;
+    min-height: 380px;
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 0 0 2px #000;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 15px 0;
+    margin-top: 0;
+    gap: 0;
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    height: 56px;
+    background: #23d47c;
+    border-radius: 16px;
+    margin: 0 8px;
+    cursor: pointer; /* Adicione esta linha */
+    transition: background 0.2s;
+}
+
+.filter-item:hover {
+    background: #1bb36a; /* Adicione esta regra para hover */
+}
+
+.filter-item .material-icons {
+    color: #111;
+    font-size: 28px;
+}
+
+.filter-item .arrow {
+    color: #111;
+    font-size: 22px;
+}
+
+.divider {
+    height: 1px;
+    background: #000;
+    opacity: 0.2;
+    margin: 8px 0;
+    width: 60%;
+    align-self: center;
+    border-radius: 1px;
+}
+
+/* Modal para o filtro */
+#filter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#filter-modal.hidden {
+    display: none;
+}
+
+#filter-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+#filter-modal-content h3 {
+    margin-bottom: 16px;
+}
+
+.filter-option {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    background-color: #23d47c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.filter-option:hover {
+    background-color: #1bb36a;
+}
+
+.filter-button {
+    /* Ajustando para manter o caráter do item do filtro */
+    width: calc(100% - 16px); /* considerando margem lateral similar ao .filter-item */
+    height: 56px;            /* mesma altura que .filter-item */
+    background-color: #23d47c; /* cor verde */
+    border: none;            /* sem bordas */
+    border-radius: 16px;       /* bordas arredondadas, igual aos demais */
+    display: flex;           /* para alinhar os ícones */
+    align-items: center;     /* centraliza verticalmente */
+    justify-content: space-between; /* espaço entre os ícones */
+    padding: 0 8px;          /* espaçamento interno horizontal */
+    cursor: pointer;         /* cursor pointer ao passar o mouse */
+    color: black;            /* ícones em branco */
+    font-size: 28px;         /* tamanho da fonte para os ícones */
+    margin: 0 8px;           /* mesma margem lateral como nos demais itens */
+}
+
+.filter-button:hover {
+    background-color: #1bb36a; /* cor mais escura no hover */
+}
+
+#disability-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
+}
+#disability-modal.hidden {
+  display: none;
+}
+#disability-modal-content {
+  background: white; /* igual ao filter-modal */
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+
+#disability-modal-content h3 {
+  margin-bottom: 16px;
+}
+
+.disability-option {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  background-color: #23d47c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.disability-option:hover {
+  background-color: #1bb36a;
+}
+
+#favorite-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 8px 0 0 0;
+    padding: 4px;
+    transition: background 0.2s;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+#favorite-btn:hover {
+    background: #fcecb1;
+}
+#favorite-icon {
+    color: #ffd700;
+    font-size: 2rem;
+    transition: color 0.2s;
+}
+
+#favorites-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1003;
+}
+#favorites-modal.hidden {
+  display: none;
+}
+#favorites-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+#favorites-list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#favorites-list li:hover {
+  background: #fcecb1;
+}
+#favorites-list li button {
+    transition: background 0.2s;
+    color: #111 !important;
+}
+#favorites-list li button:hover {
+    background: #ffeabf;
+}
+
+#create-location-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1004;
+}
+#create-location-modal.hidden {
+  display: none;
+}
+#create-location-modal-content {
+  background: white;
+  padding: 32px 24px 24px 24px;
+  border-radius: 12px;
+  min-width: 380px;
+  max-width: 600px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+  text-align: left;
+  position: relative;
+}
+
+#create-location-modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#create-location-form input,
+#create-location-form select,
+#create-location-form button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  font-size: 1em;
+  background: #fafafa;
+  transition: border 0.2s;
+  display: block;
+}
+
+#create-location-form input:focus,
+#create-location-form select:focus {
+  border-color: #23d47c;
+  outline: none;
+}
+
+#create-location-form button {
+  background: #23d47c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 0;
+  transition: background 0.2s;
+  padding: 12px;
+}
+
+#create-location-form button:disabled {
+  background: #e0e0e0;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+#create-location-form button:not(:disabled):hover {
+  background: #1bb36a;
+}
+
+#create-location-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg width='16' height='16' fill='gray' xmlns='http://www.w3.org/2000/svg'><path d='M4 6l4 4 4-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+}
+
+#close-create-location-modal {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 1.2em;
+  color: #888;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 2;
+  transition: color 0.2s;
+}
+#close-create-location-modal:hover {
+  color: #23d47c;
+}
+
+#open-maps-btn {
+    width: 100%;
+    padding: 10px 0;
+    background: #23d47c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(35, 212, 124, 0.08);
+    letter-spacing: 0.5px;
+}
+
+#open-maps-btn:hover {
+    background: #1bb36a;
+    color: #ffd700;
+}
+
+/* Checkboxes de acessibilidade responsivas */
+#create-location-form .accessibility-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* aumenta o espaçamento entre os itens */
+  margin-bottom: 14px;
+  margin-top: 8px;
+}
+
+#create-location-form label[for^="access-"] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 0;
+  padding-left: 4px; /* leve recuo para alinhar melhor */
+}
+
+/* Opcional: alinhar o grupo todo à esquerda ou centralizar */
+#create-location-form .accessibility-group {
+  align-items: flex-start; /* para alinhar à esquerda */
+}
+/* Se quiser centralizar todo o grupo, troque por: */
+/* align-items: center; */
+
+#create-location-form input[type="checkbox"] {
+  margin: 0; /* remove margem extra */
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #fafafa;
+  border: 2px solid #23d47c;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+  margin-right: 6px;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+  vertical-align: middle;
+}
+
+#create-location-form input[type="checkbox"]:checked {
+  background-color: #23d47c;
+  border-color: #1bb36a;
+}
+
+#create-location-form input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+#create-location-form input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #23d47c55;
+}
+
+@media (max-width: 1200px) {
+  .main-content, #map-container, .content-row {
+    max-width: 98vw;
+    padding: 0 8px;
+  }
+  .content-row {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .content-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .filter-box, .filter-box-vertical {
+    min-height: unset;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  #map-container {
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+  }
+  .main-content {
+    padding: 0 2vw;
+  }
+  .search-bar {
+    max-width: 100vw;
+    height: 44px;
+    font-size: 1em;
+    margin-bottom: 16px;
+  }
+  .acessigo-logo {
+    font-size: 1.1rem;
+    margin-right: 8px;
+  }
+  .content-row {
+    gap: 8px;
+  }
+  .filter-box, .filter-box-vertical {
+    padding: 12px 4px;
+    border-radius: 16px;
+    font-size: 1em;
+  }
+  #map {
+    border-radius: 4px;
+    border-width: 1px;
+  }
+  #modal-content,
+  #filter-modal-content,
+  #disability-modal-content,
+  #favorites-modal-content,
+  #create-location-modal-content {
+    width: 96vw !important;
+    min-width: unset;
+    max-width: 98vw;
+    padding: 12px 4vw;
+  }
+  #create-location-modal-content {
+    padding: 18px 4vw 12px 4vw;
+  }
+  #create-location-form input,
+  #create-location-form select,
+  #create-location-form button {
+    font-size: 0.98em;
+    padding: 8px 8px;
+  }
+  #open-maps-btn {
+    font-size: 0.98em;
+    padding: 8px 0;
+    margin-top: 10px;
+  }
+}
+
+/* Ajuste para botões e ícones em telas pequenas */
+@media (max-width: 400px) {
+  .filter-item,
+  .filter-button {
+    font-size: 1em;
+    height: 40px;
+    padding: 0 4px;
+    border-radius: 10px;
+  }
+  #close-create-location-modal {
+    top: 8px;
+    right: 8px;
+    font-size: 1em;
+  }
+}
+
+#error-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+#error-modal.hidden {
+  display: none;
+}
